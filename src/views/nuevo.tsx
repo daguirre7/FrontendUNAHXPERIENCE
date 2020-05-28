@@ -11,9 +11,12 @@ import useFormHelper from "../helpers/useFormHelper";
 //Gets
 import {ICarrera} from "../interfaces/carrera";
 import {getCarreras} from "../services/carreras";
+import {postEstudiante} from "../services/estudiante";
 
 const  Nuevo: React.FC = () => {
   const [carreras,setCarreras] = useState([]);
+  const [estudiante,setEstudiante] = useState([]);
+  
   const states = useState({
     name: "",
     description: "",

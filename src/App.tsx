@@ -7,6 +7,7 @@ import CreateLanguage from "./views/create-language";
 import Categories from "./views/categories";
 import Index from "./views/index";
 import Nuevo from "./views/nuevo";
+import NuevoEstudiante from "./views/create-estudiante";
 import Docente from "./views/docente";
 import Perfil from "./views/perfil";
 import Docentes from "./views/docentes"
@@ -19,6 +20,7 @@ const App: React.FC = () => (
       <Switch>
           <Route path="/index" exact component={Index}/>
           <Route path="/nuevo" exact component={Nuevo}/>
+          <Route path="/nuevoestudiante" exact component={NuevoEstudiante}/>
           <Route path="/docente" exact component={Docente}/>
           <Route path="/perfil" exact component={Perfil}/>
           <Route path="/docentes" exact component={Docentes}/>
