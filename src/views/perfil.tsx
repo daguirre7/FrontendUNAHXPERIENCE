@@ -19,7 +19,7 @@ import {
 // core components
 import IndexNavbar from "../components/Navbars/IndexNavbar";
 import ProfilePageHeader from "../components/Headers/ProfilePageHeader";
-//import NavigationTabs from "components/Navbars/NavigationTabs";
+
 
 const PerfilPage: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("1");

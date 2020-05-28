@@ -7,13 +7,11 @@ import Footer from "../components/footer";
 import Subheader from "../components/subheader";
 import EstudianteForm from "../components/estudiante-form";
 
-import {deleteLanguage} from "../services/languages";
 
 
 const CreateEstudiante: React.FC = () => {     
     const [needAction,setNeedAction] = useState(false);
     const [back,setBack] = useState(false);
-    const [deleted,setDeleted] = useState(false);
     const {id} = useParams();
 
     /*Modal stages*/ 
@@ -33,27 +31,7 @@ const CreateEstudiante: React.FC = () => {
     }
 
     function dropLanguage(){
-        if(!completed){
-            setSubmitting(true);
-            setMessage("Sending...");
-            deleteLanguage(id).then(value=>{
-              setCompleted(true);
-              setSubmitting(false);
-              if(value.data.successed){
-                setMessage(value.data.message);
-                setDeleted(true);
-              }else{
-                setMessage("We got a server error!");
-              }
-            })
-          }else{
-            setCompleted(false);
-            setMessage("Do you want to delete?");
-            hideModal();
-            if(deleted){
-                setBack(true);
-            }
-          }
+
     }
     /*-----------------------------------------*/
 
@@ -68,7 +46,7 @@ const CreateEstudiante: React.FC = () => {
     if(back){
         return(
             <Redirect
-                to="/languages"
+                to="/perfil"
             />
         );
     }else{
