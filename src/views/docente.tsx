@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import imgDocente from "../assets/img/faces/joe-gardner-2.jpg"
 import imgAvatar from "../assets/img/default-avatar.png"
 import Rating from "../components/Rating/starrating"
 import RatingSet from "../components/Rating/starratingset"
+import { useParams } from "react-router-dom";
+import Subheader from "../components/subheader";
+
+import { getOneDocente } from "../services/docente"
+import { IDocente } from "../interfaces/docente"
+
+
+import useFormHelper from "../helpers/useFormHelper";
 
 
 
@@ -27,7 +35,26 @@ import ProfilePageHeader from "../components/Headers/ProfilePageHeader";
 //import NavigationTabs from "components/Navbars/NavigationTabs";
 
 const DocentePage: React.FC = () => {
+  
+  const [docentex, setDocente] = useState([]);
+  const [name, setName] = useState("");
+  const [update, setUpdate] = useState(true);
+  const { id } = useParams();
   const [activeTab, setActiveTab] = React.useState("1");
+
+  useEffect(() => {
+
+    getOneDocente(id).then(r => {
+      setDocente(r);
+    });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      console.log("cleaned up");
+    };
+  }, []);
+
 
   const toggle = (tab: any) => {
     if (activeTab !== tab) {
@@ -42,10 +69,32 @@ const DocentePage: React.FC = () => {
       document.body.classList.remove("landing-page");
     };
   });
+
+  const states = useState({
+    named: "",
+    abrobado: false,
+    rate: "",
+    curso: ""
+  });
+
+
+  const {
+    values,
+    handleChange,
+    updateValues
+  } = useFormHelper(states);
+
+
+
+
+
+
+
   return (
     <>
       <IndexNavbar />
       <ProfilePageHeader />
+
       <div className="section profile-content">
         <Container>
           <div className="owner">
@@ -58,18 +107,19 @@ const DocentePage: React.FC = () => {
                 height="200"
               />
             </div>
-            <div className="name">
-              <h4 className="title">
-                Jane Faker <br />
-              </h4>
 
-            </div>
+
+            {docentex.map((doce: IDocente)=>(
+              <Subheader title={doce.NombreDocente}></Subheader>
+            ))}
+
           </div>
+
           <Col className="ml-auto mr-auto text-center" md="12">
             <h6 className="description">Docente</h6>
             <br />
           </Col>
-          <div> 
+          <div>
             <RatingSet></RatingSet>
           </div>
           <Row>

@@ -22,7 +22,6 @@ import { postEstudiante } from "../services/estudiante";
 
 const EstudianteForm: React.FC = () => {
     const [carreras, setCarreras] = useState([]);
-    const [cleanUp, setCleanUp] = useState(true);
     const [redirectNow,setRedirectNow] = useState(false);
 
 
@@ -39,10 +38,9 @@ const EstudianteForm: React.FC = () => {
         setShowmodal(true);
       }          
 
-      function redirectTo(event:any){
-        
-        setRedirectNow(true)
-    }
+      function redirectTo(){
+            setRedirectNow(true)
+        }
       function saveEstudiante() {
 
         if (!completed) {
@@ -50,16 +48,7 @@ const EstudianteForm: React.FC = () => {
             setMessage("Sending...");
 
             if (id) {
-                        // putLanguage(id,values).then(value=>{
-                        //   setCompleted(true);
-                        //   setSubmitting(false);
-                        //   if(value.data.successed){
-                        //     setMessage("Language updated with success");          
-                        //   }else{
-                        //     setMessage("Language name already exist");
-                        //   }
-                        // }) 
-                        // console.log("OKKK");
+
             } else {
 
                 postEstudiante(values).then(value => {
@@ -67,9 +56,20 @@ const EstudianteForm: React.FC = () => {
                     setSubmitting(false);
                     if (value.data.successed) {
                         setMessage("Estudiante stored with success");
-                        redirectTo;
+                        redirectTo();
                     } else {
-                        setMessage("Estudiante name already exist");
+                        if((value.data.CarreraID==undefined)){
+                            setMessage("Carrera No Existe");     
+                        }else{
+                            if(value.data.Email!=null){
+                                setMessage("Correo ya existe");
+                        }else{
+                            setMessage("NickName ya existe");
+                            document.write(value.data.NickName,"Nickname");
+                        }
+
+                        }
+                        
                     }
                 })
             }
@@ -97,18 +97,7 @@ const EstudianteForm: React.FC = () => {
     } = useFormHelper(states);
 
     
-    // useEffect(()=>{
-    //     if(id && cleanUp){
-    //       setCleanUp(false);
-    //       getEs(id).then(value=>{
-    //         updateValues({
-    //           name: value.data.name,
-    //           description: value.data.description,
-    //           category: value.data.category
-    //         });          
-    //       })
-    //     }
-    //   },[id,updateValues,cleanUp])
+
 
     useEffect(() => {
         getCarreras().then(c => {
@@ -121,16 +110,6 @@ const EstudianteForm: React.FC = () => {
             console.log("cleaned up");
         };
     }, []);
-
-    // document.documentElement.classList.remove("nav-open");
-    // React.useEffect(() => {
-    //     document.body.classList.add("nuevo");
-    //     return function cleanup() {
-    //         document.body.classList.remove("nuevo");
-    //     };
-    // });
-    //Funcion salvar estudiante
-
 
 
 
@@ -262,7 +241,7 @@ const EstudianteForm: React.FC = () => {
                     </Row>
                 </Container>
                 { (redirectNow) && (
-                <Redirect to={`/index}`} ></Redirect>
+                <Redirect to={`/index`} ></Redirect>
             ) }
             </div>
         </>

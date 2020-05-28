@@ -60,7 +60,7 @@ const IndexNavbar: React.FC = () =>{
             data-placement="bottom"
             href="/index"
             target="_blank"
-            title="Coded by Creative Tim"
+            title="Coded by Dave, Vx3, CruelLink"
           >
             UNAHXPERIENCE
           </NavbarBrand>
